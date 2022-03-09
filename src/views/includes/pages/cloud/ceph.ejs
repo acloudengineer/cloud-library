@@ -1,0 +1,44 @@
+<div id="ceph">
+
+  Ceph Intro 
+
+ 
+
+  Two components we set up for configuring our ceph systems 
+  
+   
+  
+  Ceph Monitors 
+  
+  A ceph Monitor (ceph-mon) maintians maps of the cluster state, including the monitor map, manager map, the OSD map and the CRUSH map.  These maps are critical cluster state required for Ceph daemons to coordinate with each other.  Monitors are also responsible for managing authentication between daemons and clients.  At least three monitors are normally required for redundance and high availability. 
+  
+   
+  
+  General hostname configuration (openstack-mon#.cluster.pc.ostk.com) 
+  
+   
+  
+  Ceph OSDS 
+  
+  A Ceph OSD (object storage daemon, ceph-osd) stores data, handles data replication, recovery, rebalancing, and provides some monitoring information to Ceph Monitors and Managers by checking other Ceph OSD Daemons for a heartbeat.  At least 3 Ceph OSDs are normally required for redundance and high availability. 
+  
+  General hostname configuration (openstack-osd#.cluster.pc.ostk.com) 
+  
+   
+  
+  Generally two networks will need to be configured.   
+  
+  Admin and Cluster 
+  
+  Example 
+  
+  Admin 10.10.10.0/24 
+  
+  Cluster 10.10.11.0/24 
+  
+   
+
+
+
+
+</div>

@@ -1,0 +1,328 @@
+<div id="packer">
+<h2>Packer</h2>
+<h4>Documentation</h4>
+<p>https://www.packer.io/docs</p>
+<p>Note that the documentation is primary set for HCL for the latest version but you can see JSON by changing the vesrion on the left hand side.</p>
+<p>That being said, options and parameters for the various builders and provisioners etc are documented very well and this will not go into a lot of detail.</p>
+
+
+<h5>Builder</h5>
+<p>https://www.packer.io/docs/v1.5.x/builders</p>
+<p>Define the desired platform and platform configurations, including API key information and desired source images</p>
+
+<h5>Provisioner</h5>
+<p>Define how to configure the image, most likely by using your existing configuration management platform.  ie. Ansible, Chef, Puppet etc.</p>
+
+<h5>Post-Processor</h5>
+<p>Related to the builder; runs after the image is built, generally generates or supplies artifacts</p>
+
+<h5>Communicator</h5>
+How Packer works on the machine image during creation.  By default, this is SSH and does not need to be define.
+
+<h6>Build</h6>
+<p>The combination of the previous components to create a machine image; a template can have multiple builds</p>
+
+<h6>Artifact</h6>
+<p>The end results of a build; generally, this is the machine image itself and any generated log or metadata files</>
+
+<h6>Command</h6>
+<p>The commands run on the CLI to manager Packer; most often, this is the <code>packer build</code> command</p>
+
+
+
+<h5>JSON</h5>
+
+<h6>Object</h6>
+<p>ada., name/value pair, associative array, dictionary, key list</p>
+<p>Begin and end with {}</p>
+<p>Names in names and pairs ends in colon</p>
+<p>Separate multiple pairs with a comma</p>
+
+<pre><code>
+{
+  "name": "value",
+  "name": "value"
+}
+</code></pre>
+
+
+<h6>Array</h6>
+<p>aka, ordered list, vector, list, sequence</p>
+<p>Starts and ends with []</p>
+<p>Separate multiple pairs with comma (,)</p>
+
+<pre><code>
+  [
+    "item",
+    "item"
+  ]
+</code></pre>
+<p>Link to sample JSON packer file</p>
+
+<h5>HCL2</h5>
+<h6>HashiCorp Configuration Language</h6>
+<p>HashiCorp's own config language for use with multipe HashiCorp tools; most associated with Terraform</p>
+<h6>Version2</h6>
+<p>Enables teh use of expressions within HCL code; conbines HCL1 with HIL (HashiCorp Interpolation Language)</p>
+<h6>Human readable, JSON compatible</h6>
+<p>HCL is very similar to JSON but with even greater focus on human readabilityu over machine usage</p>
+<h6>Allows comments</h6>
+<p>Annotate your builds with multiple commenting options</p>
+
+<h6>Object</h6>
+<p>Simplified from JSON</p>
+<p>Remove the outer braces</p>
+<p>Switches the colon (:) to an equal(=)</p>
+<p>Drops quotes from around the name in a name/value pair</p>
+<p>Drops the commas</p>
+
+<pre><code>
+objectname {
+  name = "value"
+  name = "value"
+}
+</code></pre>
+
+<h6>Array</h6>
+<p>Basically the same</p>
+<p>Begin with brackets</p>
+<p>Separate multiple pairs with a comma (,)</p>
+<p>Multiple components use block formatting, not lists</p>
+
+<pre><code>
+  ["item", "item"]
+</code></pre>
+
+<h6>Attribute</h6>
+<p>Single configuration unit; generally a name/value pair</p>
+
+<h6>Block</h6>
+<p>A collection of attributes with an annotated block type (filters)</p>
+
+<h6>Body</h6>
+<p>A collection of associate blocks</p>
+
+<h6>Comments</h6>
+<p>Inline and Multi-line comments</p>
+
+<p>Link to sample HCL2 packer file</p>
+<h4></h4>
+<h5>Linux Installation</h5>
+<ul>
+  <li>Pull down the compressed file from the packer website</li>
+  <ul>
+    <li>https://www.packer.io/downloads</li>
+  </ul>
+  
+  <li>Unzip the compressed file to get the binary</li>
+  <li>Move the binary to /usr/bin</li>
+  <code>mv packer /usr/bin</code>
+</ul>
+<h5>MAC Installation</h5>
+<p>Use brew.  Use brew for all the things.  Shutup and use brew</p>
+<code>brew install hashicorp/tap/packer</code>
+<h5>Windows Installation</h5>
+<ul>
+  <li>Pull down the compressed file from the packer website</li>
+  <ul>
+    <li>https://www.packer.io/downloads</li>
+  </ul>
+  <li>Unzip the compressed file to get the binary</li>
+</ul>
+
+<h5>Packer Plugin Installation</h5>
+<p>In Development</p>
+
+</div>
+
+<h4>Building Templates</h4>
+<p>It's beneficial to build a folder for your AMIs</p>
+<p>Create a json file, for simplicities sake name it packer.json for now</p>
+
+<h4>Communicator</h4>
+<p>https://www.packer.io/docs/v1.5.x/communicators</p>
+
+<p>By default this is SSH, but it will need to be configured if a system is using Windows or such</p>
+
+<h4>Building the Image</h4>
+<code>packer validate "filename"</code> <br />
+
+<code>packer fix</code>
+<p>Packer preferred way</p>
+
+<code>packer build "filename"</code>
+
+<h4>Provisioners</h4>
+<p>https://www.packer.io/docs/v1.5.x/provisioners</p>
+<h5>Bash Shell</h5>
+<h6>Providing a Packer Image with Bash</h6>
+
+<p>type = Shell</p>
+<p>inline to use a list [] of commands</p>
+<p>script or scripts to provide a script to run or a list of scripts to run</p>
+
+<h5>File</h5>
+<h6>Adding Files to a Packer Build</h6>
+<p>A trailing slash for a source wil upload all contents of a directory to the destination</p>
+
+<h5>Ansible</h5>
+<h6>type: ansible</h6>
+<p>Provision using a remote Ansible server;  runs ansible-playbook over SSH</p>
+<pre><code>
+  "provisioners": [
+  {
+    "type": "ansible",
+    "playbook_file": "./playbook.yml"
+  }
+]
+</code></pre>
+
+<h6>ansible-local</h6>
+<p>Install ansible on the remote and use it to configure the localhost</p>
+<pre><code>
+"provisioners": [
+    {
+      "type": "ansible-local",
+      "playbook_file": "./playbook.yml"
+    }
+]
+</code></pre>
+
+<h5>Chef</h5>
+<h6>chef-client</h6>
+<p>Connect to an existing Chef Infra Server to provision the remote as desired</p>
+<pre><code>
+"provisioners": [
+    {
+      "type": "chef-client",
+      "server_url": "www.chef.mylabserver.com"
+    }
+]
+</code></pre>
+
+<h6>chef-solo</h6>
+<p>Install Chef on the remote and use it to configure the localhost</p>
+<pre><code>
+"provisioners": [
+    {
+      "type": "chef-solo",
+      "server_url": ["cookbook"]
+    }
+]
+</code></pre>
+
+<h5>Puppet</h5>
+<h6>puppet-server</h6>
+<p>Connect to an existing Puppet Server to provision the remote as desired</p>
+<pre><code>
+"provisioners": [
+  {
+    "type": "puppet-masterless",
+    "manifest_file": "site.pp",
+    "type": "puppet-masterless"
+  }
+]
+</code></pre>
+
+<h6>puppet-masterless</h6>
+<p>Run the puppet apply comand on the remote to configure the machine</p>
+<pre><code>
+"provisioners": [
+    {
+          "type": "puppet-server",
+          "puppet_server": "puppet"
+    }
+]
+</code></pre>
+
+<h5>Salt</h5>
+<h6>salt-masterless</h6>
+<p>Provision the remote using masterless Salt</p>
+<pre><code>
+"provisioners": [
+    {
+      "type": "salt-masterless",
+      "local_state_tree": "salt"
+    }
+]  
+</code></pre>
+
+<h4>Post-Processors</h4>
+<p>Related to the builder; runs after the image is built, generally generates or supplies artifacts</p>
+
+<pre><code>
+"post-processors": [
+    {
+        "type": "amazon-import",
+        "access_key": "AWSACCESSKEY",
+        "secret_key": "AWSSECRETKEY",
+        "region": "us-east-1",
+        "s3_bucket_name": "importbucket",
+        "license_type": "BYOL",
+        "tags": {
+          "Description": "packer amazon-import {{timestamp}}"
+        }
+    }
+]
+</code></pre>
+<h6>Other Outputs</h6>
+<p>Repackage the image</p>
+<ul>
+  <li>Amazon Import</li>
+  <li>Docker Import</li>
+  <li>Vagrant</li>
+</ul>
+<p>Upload or alter artifacts</p>
+<ul>
+  <li>Artifice</li>
+  <li>Compress</li>
+  <li>Manifest</li>
+  <li>Docker Build</li>
+  <li>Docker Tag</li>
+</ul>
+<p>And More!</p>
+<ul>
+  <li>Checksum</li>
+  <li>Shell</li>
+</ul>
+
+
+<h4>Parallel Builds</h4>
+
+
+
+<h4>HCL</h4>
+<p>HCL does not work with validate so trial and error is probable.</p>
+<p>Files end in pkr.hcl</p>
+<p>Files can include comments with hcl</p>
+<p>A template can be split across multiple files.  The following is a source file</p>
+<pre><code>
+source "lxd" "ubuntu" {
+  image = "ubuntu:focal"
+  init_sleep = "30"
+}
+</code></pre>
+<p>In the build you can specifi the individual sources to be provisioned</p>
+
+<pre><code>
+build {
+  sources = [
+    "source.type.file",
+    "source.type.file2"
+  ]
+
+  provisioner "shell" {
+    script = "scripts/runthis.sh"
+  }
+}
+</code></pre>
+
+
+<h4>Debugging</h4>
+Debug flag
+Breakpoint provisioner 
+
+<h4>Wrapping Up</h4>
+<p>There is a lot of things that can be done with packer and we really encourage reading the 
+  docs at the top of this section as it is pretty well defined for the builders and 
+  provisioners with explanations on the options for each.</p>

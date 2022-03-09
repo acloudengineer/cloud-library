@@ -1,0 +1,109 @@
+LibVirt Notes
+
+
+
+
+
+       What is Libvirt?:
+
+   Is a software that allows you to manage VM's and other virtualizations functionality. Such, as storage and network interfaces. With Libvirt they have an API library, Daemon(libvirtd), cli(virsh).
+
+The Primary goal of libvirt. providing a single program to manage many different virtualizations. with the command, "virsh list --all" This will show you any hypervisor supported (KVM,XEN,VMWare, ESX, ECT) It removes the need to learn hypervisor specific tools.
+
+       Where are VM's config stored?
+   If you want to edit a VMx XML, you can use the following command, "virsh edit $vmname" you can also, make a backup by "virsh dumpxml $vmname". for qemu lxc, libvirt stores the XML on disk and in memory. libvirt is often configured to store the qemu vm and other XML descriptors in /ect.
+
+It's probably best to use the "virsh xmledit", because libvirt will validate those changes. It's possible to to modify it directly and restarting libvirtd. But, libvirtd could possible overwrite those changes.
+
+
+Other Commands to use for editing the xml:
+
+Virtual Networks:  net-edit, net-dumpxml
+Storage Pools   :  pool-edit, pool-dumpxml
+Storage Volumes :  vol-edit, vol-dumpxml
+Interfaces      :  iface-edit, iface-dumpxml
+
+
+Virsh commands:
+
+virsh shutdown $vmname -- soft shutdown like pushing the power button.
+virsh destroy $vname   -- this is a power off same things as pulling the cord to the server.
+virsh start $vname     -- This will start up the guest
+
+Another thing that is important to remember. Is if you can't get the guest to start or reboot. Checking your process
+s and seeing if it's defunct is important too.
+
+
+generally this can be done by: 
+
+ps faux |grep --color "$instanceid"
+ps faux |grep --color "$vmname"
+ps faux |grep --color "$last6macaddress"
+ps faux |grep --color "$uuid"
+
+Restarting the libvirtd (shouldn't) kill your instances. but there is a possibility for anything.
+
+
+So, if the libvirtd gets an error of not being able to connection to "/var/run/libvirt/libvirt-sock" simple service libvirtd restart. should fix it.
+
+
+also, if you are curious of what errors there are you can also check your /var/log/messages and /var/log/libvirt/qemu
+/$vmname.log
+
+
+
+
+http://wiki.libvirt.org/page/Networking#NAT_forwarding_.28aka_.22virtual_networks.22.29
+http://wiki.libvirt.org/page/Networking#Host_configuration_2
+http://wiki.libvirt.org/page/Networking#Guest_configuration_2
+http://wiki.libvirt.org/page/Networking#Forwarding_Incoming_Connections
+http://wiki.libvirt.org/page/FAQ
+
+
+
+
+
+
+OSI
+http://computer.howstuffworks.com/osi1.htm
+
+What is the difference between a hub and a switch.
+
+Puppet-Puppet configuration management - what is puppet and how do we use it in our systems  
+Put simply, Puppet is a system for automating system administration tasks.
+
+Learning Puppet 4
+https://drive.google.com/file/d/0B-vQAhaJfKFTU0FrS3dkWng2eEU/view?usp=sharing
+
+Puppet 3 Beginners Guide
+https://drive.google.com/file/d/0B-vQAhaJfKFTeGpQZWdGQkFFbjg/view?usp=sharing
+
+Puppet Cookbook, 3rd Ed
+https://drive.google.com/file/d/0B-vQAhaJfKFTVmoyWFBkVDhLMlE/view?usp=sharing
+
+
+qemu
+QEMU is a generic and open source machine emulator and virtualizer.
+When used as a machine emulator, QEMU can run OSes and programs made for one machine (e.g. an ARM board) on a different machine (e.g. your own PC). By using dynamic translation, it achieves very good performance.
+When used as a virtualizer, QEMU achieves near native performance by executing the guest code directly on the host CPU. QEMU supports virtualization when executing under the Xen hypervisor or using the KVM kernel module in Linux. When using KVM, QEMU can virtualize x86, server and embedded PowerPC, and S390 guests.
+
+
+kvm
+KVM (for Kernel-based Virtual Machine) is a full virtualization solution for Linux on x86 hardware containing virtualization extensions (Intel VT or AMD-V). It consists of a loadable kernel module, kvm.ko, that provides the core virtualization infrastructure and a processor specific module, kvm-intel.ko or kvm-amd.ko.
+Using KVM, one can run multiple virtual machines running unmodified Linux or Windows images. Each virtual machine has private virtualized hardware: a network card, disk, graphics adapter, etc.
+KVM is open source software. The kernel component of KVM is included in mainline Linux, as of 2.6.20. The userspace component of KVM is included in mainline QEMU, as of 1.3.
+
+
+varnish
+Varnish is a reverse HTTP proxy, sometimes referred to as an HTTP accelerator or a web accelerator. A reverse proxy is a proxy server that appears to clients as an ordinary server. Varnish stores (caches) files or fragments of files in memory that are used to reduce the response time and network bandwidth consumption on future, equivalent requests. Varnish is designed for modern hardware, modern operating systems and modern work loads.
+
+Varnish Cache How to 
+https://drive.google.com/file/d/0B-vQAhaJfKFTY3ZENzg5NktMbWc/view?usp=sharing
+
+
+memcache
+Free & open source, high-performance, distributed memory object caching system, generic in nature, but intended for use in speeding up dynamic web applications by alleviating database load.
+
+Zabbix - http://www.zabbix.com/download.php to download software and experiment with it at home
+
+Troubleshooting connections, using and understanding netstat or ss, what they do, what switches are being used with it, ie - tuna

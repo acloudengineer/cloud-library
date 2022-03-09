@@ -1,0 +1,32 @@
+* {
+  margin: 0px;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: thin;
+}
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 1em 10px 1em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+.aside-header {
+  font-size: 20px;
+  text-align: center;
+  padding: 5px;
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, .5);
+}
+
+.nav-item a:hover {
+  color: #000;
+}
+
+#credits {
+  border: 1px solid lightgrey;
+}

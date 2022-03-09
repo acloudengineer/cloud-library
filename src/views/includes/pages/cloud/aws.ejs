@@ -1,0 +1,47 @@
+<p id="aws">
+  
+  <h2>Amazon Web Services</h2>
+  <p>https://docs.aws.amazon.com/</p>
+  <p>https://aws.amazon.com/whitepapers</p>
+  
+ 
+  <h4>Security on AWS</h4>
+  <h5>Shared Responsibility Model</h5>
+  <ul>
+    <h5>Customer</h5>
+    <p>Responsibility for security IN the cloud</p>
+    <ul>
+      <li>Responsibility</li>
+      <li>Customer data</li>
+      <li>Platform, application, and IAM</li>
+      <li>OS patching on EC2</li>
+      <li>Antivirus</li>
+      <li>Network, and firewall configuration</li>
+      <li>Multi-factor authentication</li>
+      <li>Password and key rotation</li>
+      <li>Security Groups</li>
+      <li>Resource-based policies</li>
+      <li>Access control lists</li>
+      <li>VPC</li>
+      <li>Operating System-level patches</li>
+      <li>Data in transit and at rest</li>
+    </ul>
+    <h5>AWS</h5>
+    <p>Responsibility for security OF the cloud</p>
+    <ul>
+      <li>Regions, availability zones, and edge locations</li>
+      <li>Physical server level and below</li>
+      <li>Fire/power/climate management</li>
+      <li>Storage device decommissioning according to industry standards</li>
+      <li>Personnel security</li>
+      <li>Network device security and ACLs</li>
+      <li>API access endpoints use SSL for secure communication</li>
+      <li>DDoS protection</li>
+      <li>EC2 instances and spoofing protection (ingress/egress filtering)</li>
+      <li>Port scanning against rules even if it's your own environment</li>
+      <li>EC2 instance hypervisor location</li>
+      <li>Instances on the same physical device are seperated at the hypervisor level; they are independent of each other</li>
+      <li>Underlying OS patching on Lambda, RDS, DynamoDB, and other managed services; customer focuses on security</li>
+    </ul>
+</ul>
+</p>

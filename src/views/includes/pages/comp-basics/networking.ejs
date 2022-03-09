@@ -1,0 +1,370 @@
+<div id="networking">
+
+  <h2>Networking</h2>
+  <p> What is the OSI model.</p>
+  <p>The OSI model was created in the 1980's to define a standard set of communication protocols. It is not a hard and fast model, and it doesn't always map well to the TCP/IP model. However it is an industry standard and is important to know. It will also allow to know how different protocols relate to each other. Each layer serves the layer above and is served by the layer below.</p>
+  <p>So after the end user is using a computer to interface with networks/internet this how it would follow:</p> 
+   <ul>
+     <li>Layer 7: Application - HTTP, SMTP, FTP, DNS, DHCP, SSL <br />
+      This is the actual program they are interacting with to make a connection to service they are wanting. Ex: Firefox, google chat, Chrome. </li>
+     <li>Layer 6: Presentation - CSS, HTML, CSS <br />
+      this is the level of the OS (operating system.) it is the where the encryption/decription happens.</li>
+     <li>Layer 5: Session - RPC, HTTP, HTTPS, SMTP <br />
+      This is the layer that checks and establishes the session between you and the place the data is being sent. “sending an email, connecting to a website.” to see if you have the ability to make that connection or if you are being blacklisted.. 
+    </li>
+     <li>Layer 4: Transport - UDP/TCP <br />
+      This deals with the sending of the data in Packets. This layer will decide if it’s going to be breaking up what you are sending into multiple packets or a single packets. 
+    </li>
+     <li>Layer 3: Network - IPv4, IPv6, AppleTalk <br />
+      This is the layer where IP addresses reside. This where routers reside as well</li>
+     
+     <li>Layer 2: Link - Ethernet, DOCSIS, DSL, ATM, MPLS <br />
+      This is the layer where MAC addresses reside. This is where Switches reside as well.  this is where the data is being passed through to the next system. 
+    </li>
+     <li>Layer 1:Physical - Copper, Fiber, Radio, Pigeons <br />
+      This has to do with all the hardware the physical things you can touch on a network. “cables, computers, switches, routers, hubs.” </li>
+   </ul>
+
+
+
+<p>You'll notice that some protocols are listed twice. It's not a hard and fast model. And there is some debate as to where things go.</p>
+ 
+<p>The TCP model has only 4 layers. Again, it's not a hard and fast model</p>
+ <ul>
+   <li>Application:  SSH, SMTP, DHCP, SSL, HTTP/S, FTP, DNS, XMPP,</li>
+   <li>Transport:  TCP, UDP, others.</li>
+   <li>Internet: IPv4, IPv6</li>
+   <li>Link:  Ethernet, Wifi, DOCSIS, DSL, ATM, MPLS</li>
+ </ul>
+ 
+
+<p>There are protocols that don't fit neatly into these models, Such as ARP, and ICMP. ARP uses ethernet, but is not an internet protocol, it is an internet helper. ICMP uses IP, but is not a transport protocol.</p> 
+
+For more information see: <br />
+OSI model - Wikipedia, the free encyclopedia <br />
+Internet protocol suite - Wikipedia, the free encyclopedia
+</p>
+
+<h3>Subnetting</h3> 
+  <table border="1">
+    <tr>
+      <td>bit</td>
+      <td>1</td>
+      <td>2</td>
+      <td>4</td>
+      <td>8</td>
+      <td>16</td>
+      <td>32</td>
+      <td>64</td>
+      <td>128</td>
+    </tr>
+    <tr>
+      <td>mask</td>
+      <td>256</td>
+      <td>254</td>
+      <td>252</td>
+      <td>248</td>
+      <td>240</td>
+      <td>224</td>
+      <td>192</td>
+      <td>128</td>
+    </tr>
+  </table>
+  <p>The number of hosts available:  2^n-2  </p>
+  
+  <pre>
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  128
+  192
+  224
+  240
+  248
+  252
+  254
+  255
+  128
+  128+64
+  128+64+32
+  128+64+32+16
+  128+64+32+16+8
+  128+64+32+16+8+4
+  128+64+32+16+8+4+2
+  128+64+32+16+8+4+2+1
+</pre>
+<p>  
+  http://www.cisco.com/c/en/us/support/docs/ip/routing-information-protocol-rip/13790-8.html <br />
+  http://www.techrepublic.com/article/ip-subnetting-made-easy/ 
+  
+</p>
+
+<h4>Networking Protocols</h4>
+
+<ul>
+  <li>TCP: Transmission Control Protocol</li>
+  <li>UDP: User Datagram Protocol</li>
+  <li>HTTP: Hyper Text Transfer Protocol</li>
+  <li>FTP: File Transfer Protocol</li>
+  <li>SMTP: Simple Mail Transfer Protocol</li>
+  <li>TELNET</li>
+</ul>
+
+<p>
+  what is the difference between UDP and TCP? (there is a lot )
+  
+  TCP: is connection-oriented protocol. When a file or message send it will get delivered unless connections fails. If connection lost, the server will request the lost part. There is no corruption while transferring a message. If you send two messages along a connection, one after the other, you know the first message will get there first. You don't have to worry about data arriving in the wrong order.when the low level parts of the TCP "stream" arrive in the wrong order, resend requests have to be sent, and all the out of sequence parts have to be put back together, so requires a bit of work to piece together.Data is read as a "stream," with nothing distinguishing where one packet ends and another begins. There may be multiple packets per read call. World Wide Web (Apache TCP port 80), e-mail (SMTP TCP port 25 Postfix MTA), File Transfer Protocol (FTP port 21) and Secure Shell (OpenSSH port 22) etc.
+  
+  UDP: is connectionless protocol. When you a send a data or message, you don't know if it'll get there, it could get lost on the way. There may be corruption while transferring a message. If you send two messages out, you don't know what order they'll arrive in i.e. no orderedNo ordering of messages, no tracking connections, etc. It's just fire and forget! This means it's a lot quicker, and the network card / OS have to do very little work to translate the data back from the packets.Packets are sent individually and are guaranteed to be whole if they arrive. One packet per one read call.Domain Name System (DNS UDP port 53), streaming media applications such as IPTV or movies, Voice over IP (VoIP), Trivial File Transfer Protocol (TFTP) and online multiplayer games etc
+  
+  Why would you use one instead of the other?  
+  
+  UDP: Another case is when you are delivering data that can be lost because newer data coming in will replace that previous data/state. Weather data, video streaming, a stock quotation service (not used for actual trading), or gaming data come to mind. One other case is for multicast traffic. UDP can be multicasted to multiple hosts whereas TCP cannot do this at all.
+  
+  TCP: is for reliable transmission of the data if you want to make sure the data gets from point a to point b. TCP is the way to go.
+  
+  What is ICMP?  
+  ICMP (Internet Control Message Protocol) is a message control and error-reporting protocol between a host server and a gateway to the Internet. ICMP uses Internet Protocol (IP) datagrams, but the messages are processed by the IP software and are not directly apparent to the application user. 
+</p>
+<p>  
+  What is windowing:
+  
+  in tcp, after sending a certain amount of data, the sender has to wait for a confirmation, before sending more. The amount of data that can be sent before receiving a confirmation is called the "window size". This window size may vary during the transmission, depending on the quality of the link.
+  
+  What is the format of a TCP header
+  
+  TCP Header Format
+  
+                                      
+     0                   1                   2                   3   
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |          Source Port          |       Destination Port        |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                        Sequence Number                        |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                    Acknowledgment Number                      |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |  Data |           |U|A|P|R|S|F|                               |
+     | Offset| Reserved  |R|C|S|S|Y|I|            Window             |
+     |       |           |G|K|H|T|N|N|                               |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |           Checksum            |         Urgent Pointer        |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                    Options                    |    Padding    |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                             data                              |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  
+                              TCP Header Format
+  
+            Note that one tick mark represents one bit position.
+  
+                                 Figure 3.
+  
+  Source Port: 16 bits
+  
+      The source port number.
+  
+  Destination Port: 16 bits
+  
+      The destination port number.
+  
+  Sequence Number: 32 bits
+  
+      The sequence number of the first data octet in this segment (except
+      when SYN is present). If SYN is present the sequence number is the
+      initial sequence number (ISN) and the first data octet is ISN+1.
+  
+  Acknowledgment Number: 32 bits
+  
+      If the ACK control bit is set this field contains the value of the
+      next sequence number the sender of the segment is expecting to
+      receive.  Once a connection is established this is always sent.
+  
+  Data Offset: 4 bits
+  
+      The number of 32 bit words in the TCP Header.  This indicates where
+      the data begins.  The TCP header (even one including options) is an
+      integral number of 32 bits long.
+  
+  Reserved: 6 bits
+  
+      Reserved for future use.  Must be zero.
+  
+  Control Bits: 6 bits (from left to right):
+  
+      URG:  Urgent Pointer field significant
+      ACK:  Acknowledgment field significant
+      PSH:  Push Function
+      RST:  Reset the connection
+      SYN:  Synchronize sequence numbers
+      FIN:  No more data from sender
+  
+  Window: 16 bits
+  
+      The number of data octets beginning with the one indicated in the
+      acknowledgment field which the sender of this segment is willing to
+      accept.
+  
+  Checksum: 16 bits
+  
+      The checksum field is the 16 bit one's complement of the one's
+      complement sum of all 16 bit words in the header and text.  If a
+      segment contains an odd number of header and text octets to be
+      checksummed, the last octet is padded on the right with zeros to
+      form a 16 bit word for checksum purposes.  The pad is not
+      transmitted as part of the segment.  While computing the checksum,
+      the checksum field itself is replaced with zeros.
+  
+      The checksum also covers a 96 bit pseudo header conceptually
+      prefixed to the TCP header.  This pseudo header contains the Source
+      Address, the Destination Address, the Protocol, and TCP length.
+      This gives the TCP protection against misrouted segments.  This
+      information is carried in the Internet Protocol and is transferred
+      across the TCP/Network interface in the arguments or results of
+      calls by the TCP on the IP.
+  
+                       +--------+--------+--------+--------+
+                       |           Source Address          |
+                       +--------+--------+--------+--------+
+                       |         Destination Address       |
+                       +--------+--------+--------+--------+
+                       |  zero  |  PTCL  |    TCP Length   |
+                       +--------+--------+--------+--------+
+  
+        The TCP Length is the TCP header length plus the data length in
+        octets (this is not an explicitly transmitted quantity, but is
+        computed), and it does not count the 12 octets of the pseudo
+        header.
+  Urgent Pointer: 16 bits
+  
+      This field communicates the current value of the urgent pointer as a
+      positive offset from the sequence number in this segment.  The
+      urgent pointer points to the sequence number of the octet following
+      the urgent data.  This field is only be interpreted in segments with
+      the URG control bit set.
+  Options: variable
+  
+      Options may occupy space at the end of the TCP header and are a
+      multiple of 8 bits in length.  All options are included in the
+      checksum.  An option may begin on any octet boundary.  There are two
+      cases for the format of an option:
+  
+        Case 1:  A single octet of option-kind.
+  
+        Case 2:  An octet of option-kind, an octet of option-length, and
+                 the actual option-data octets.
+  
+      The option-length counts the two octets of option-kind and
+      option-length as well as the option-data octets.
+  
+      Note that the list of options may be shorter than the data offset
+      field might imply.  The content of the header beyond the
+      End-of-Option option must be header padding (i.e., zero).
+  
+      A TCP must implement all options.
+      Currently defined options include (kind indicated in octal):
+  
+        Kind     Length    Meaning
+        ----     ------    -------
+         0         -       End of option list.
+         1         -       No-Operation.
+         2         4       Maximum Segment Size.
+        
+  
+      Specific Option Definitions
+  
+        End of Option List
+  
+          +--------+
+          |00000000|
+          +--------+
+           Kind=0
+  
+          This option code indicates the end of the option list.  This
+          might not coincide with the end of the TCP header according to
+          the Data Offset field.  This is used at the end of all options,
+          not the end of each option, and need only be used if the end of
+          the options would not otherwise coincide with the end of the TCP
+          header.
+  
+        No-Operation
+  
+          +--------+
+          |00000001|
+          +--------+
+           Kind=1
+  
+          This option code may be used between options, for example, to
+          align the beginning of a subsequent option on a word boundary.
+          There is no guarantee that senders will use this option, so
+          receivers must be prepared to process options even if they do
+          not begin on a word boundary.
+  
+        Maximum Segment Size
+  
+          +--------+--------+---------+--------+
+          |00000010|00000100|   max seg size   |
+          +--------+--------+---------+--------+
+           Kind=2   Length=4
+  
+          Maximum Segment Size Option Data:  16 bits
+  
+            If this option is present, then it communicates the maximum
+            receive segment size at the TCP which sends this segment.
+            This field must only be sent in the initial connection request
+            (i.e., in segments with the SYN control bit set).  If this
+            option is not used, any segment size is allowed.
+  Padding: variable
+  
+      The TCP header padding is used to ensure that the TCP header ends
+      and data begins on a 32 bit boundary.  The padding is composed of
+      zeros.
+  What is the format of a UDP header
+  
+  Can you read a traceroute?  
+  
+  yes 
+  
+  What is a Frame:
+  
+  A frame is a digital data transmission unit that includes frame synchronization, i.e. a sequence of bits or symbols making it possible for the receiver to detect the beginning and end of the packet in the stream of symbols or bits. If a receiver is connected to the system in the middle of a frame transmission, it ignores the data until it detects a new frame synchronization sequence.
+  
+  
+  What is the difference between a hub and a switch? 
+  
+  a hub is something that only allows one device to talk at a time. Where as a switch allows any of the ports to talk and transfer traffic. 
+  
+  A hub broadcasts data on all ports and is not able to tell the difference between what is connected on which port. This can cause a slowdown in network response time. if it has a 10/100 and has multiple devices connected. That is shared across all of the devices slowing down the performance. Where as a switch is able to differentiate what is connected to each port.  It keeps track of what MAC Address is on which port. this way when a frame is send to the switch is knows where to route it and gives full 10/100MB for each of the ports preventing a performance reduction. 
+  
+  What is the difference between a switch and a router?
+  
+  A router sits at the edge of a network. or between two networks. it routes packets or traffic via ports Using headers and forwarding tables, routers determine the best path for forwarding the packets. Router use protocols such as ICMP to communicate with each other and configure the best route between any two hosts.
+  
+ 
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h3>Certifications</h3>
+  <ul>
+    <h4>CompTIA</h4>
+    <ul>
+      <li>Network+</li> 
+   </ul>
+  </ul>
+
+</div>

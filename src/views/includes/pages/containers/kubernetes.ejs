@@ -1,0 +1,434 @@
+<div id="kubernetes">
+
+
+
+
+<h3>Drain A Host</h3>
+
+<p>Connect to the k8s master  </p>
+<p>Kubectl drain –ignore-daemonsets –delete-local-data {worker}  </p>
+<p>Removes all the pipeline apps to ensure no impact to running apps   </p>
+<p>Could be faster to restart the cilium pod   </p>
+<p>Kubectl get poods –n kube-system o wide | grep worker | grep cilium  </p>
+<p>Grep the pod name  </p>
+<p>Kubectl delete pod/podid -n kube-system </p>
+<p> Scheduling disabled cordon </p>
+<p>Kubectl uncordon </p>
+  
+<h3>etcd Split Brain</h3>
+<p>defragging </p> 
+<p>/etc/etcd/etcdctl.env   </p> 
+<p>source it </p> 
+<p>etcdctl endpoint status --cluster -w table</p> 
+<p>find leader </p> 
+<p>get on a secondary </p> 
+<p>source the etcdctl.env again </p> 
+<p>etcdctl defrag </p>
+<p>finished alternatives then back to the leader </p>
+<p>Etc systemd override  </p>
+<p>Anisble for victoria didn'th ave issues </p>
+<p>The override it sat was the one in th unit file  </p>
+
+
+
+
+
+<h2>Kubernetes: The Hard Way</h2>
+<h3>Kelsey Hightower</h3>
+
+Note:  
+
+Obtaining the cfssl cfssljson and kubectl executables were obtained through non official sources and not through any package management system 
+
+ 
+
+For this configuration there are for systems:  A controller, 2 nodes and the api server  
+
+ 
+
+Install CFSSL 
+
+The cfssl and cfssljson command line utilities will be used to provision a PKI Infrastructure and generate TLS certificates. 
+
+ 
+
+Download the files and make the executable files and move them to PATH 
+
+/usr/local/bin  
+
+ 
+
+Install Kubectl 
+
+The kubectl command line utility is used to interact with the Kubernetes API Server 
+
+ 
+
+Generating a Certificate Authority 
+
+ 
+
+Needed certificates  
+
+ 
+
+Client Certificates 
+
+Provide client authentication for various users: admin, kubernetes-controller-manager, kube-proxy, kube-scheduler and the kubelet client on each worker node   
+
+ 
+
+Kubernetes API Server Certificate 
+
+TLS Certificate for services to communicate with the api  
+
+ 
+
+Service Account Key Pair 
+
+Used to sign service account tokens, 
+
+ 
+
+Use CA and CSR to generate the ca key and ca pem   
+
+ 
+
+ generate the following client certificates: admin, kubelet (one for each worker node), kube-controller-manager, kube-proxy, and kube-scheduler 
+
+, and for our api server  
+
+ 
+
+ 
+
+Copy the ca key and pem file for the workers to them,  copy the ca , scheduler, service account keys and pems to the master  
+
+ 
+
+ 
+
+Kubeconfigs 
+
+ 
+
+A kubernetes configuration file to store information about the clusters, users, namespaces and authentication methods.  It contains configuration data needed to connect to and interact with Kubernetes clusters  
+
+ 
+
+https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/ 
+
+ 
+
+Kubeconfigs contain information such as:  
+
+The location of the cluster to connect to 
+
+What user want to authenticate as 
+
+Data needed in order to authenticate such as tokens or client certs  
+
+You  can even define multiple contexts in a kubeconfig file, allowing to switch between clusters easily 
+
+ 
+
+Allows many components going to connect and interact with the cluster   
+
+IE worker nodes use the kubeconfig to tell a worker how to location the Kubernetes API   
+
+ 
+
+Generate a kubeconfig with kubectl for  
+
+Workers 
+
+Kube-proxy 
+
+Kube-controller-manager 
+
+Kube-scheduler 
+
+Admin kubeconfig 
+
+ 
+
+ 
+
+Copy the host.kubeconfig kube proxy for each worker  
+
+Copy kubeconfig for admin kube-controller-managee kube-scheduler   
+
+ 
+
+ 
+
+Data Encryption Config  
+
+ 
+
+Kubernetes supports encrypting secret data at rest 
+
+Secrets are encrypted so that they are never stored on disc in plain text  
+
+Means Kubernetes need the keys 
+
+ 
+
+Generate the encryption key and create a encryption config file  
+
+Copy the encryption yam to both workers 
+
+ 
+
+https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/ 
+
+ 
+
+EtcD 
+
+https://coreos.com/etcd/ 
+
+https://github.com/coreos/etcd (this GitHub repository also containes the etcd source code) 
+
+Etcd is a distributed key value store  to reliably store data across a cluster 
+
+And make sure it is synchronized across all machines 
+
+Uses etcd to store all internal data about cluster state   
+
+ 
+
+ 
+
+Download the etcd tar file from github and unzip and install on each controller node  
+
+Configure and start the etcd service  
+
+ 
+
+ 
+
+Kubenetes Control Plane  
+
+https://kubernetes.io/docs/concepts/overview/components/#master-components 
+
+ 
+
+A set of services that control the Kubernetes cluster. (Coordination / Orchestration) 
+
+Control plane components "make global decisions about the cluster (e.g., scheduling) and etect and response to cluster events (e.g., starting up a new pod with the replication controller's replicas field is unsatisfied) 
+
+ 
+
+ 
+
+Control Plane Components  
+
+Kube-apiserver: Serves the Kubernetes API. This allows users to interact with the cluster.  
+
+Etcd: Kubernetes cluster datastore (keeps controllers in sync ) 
+
+Kube-scheduler: Schedules pods on available worker nodes  
+
+Kube-controller-manager: Runs a series of controllers that provide a wide range of functionality 
+
+Cloud-controller-manager: handles interaction with underlying cloud providers. (AWS, GCP, Azure)  
+
+ 
+
+The control plane components to be installed on controllers 
+
+ 
+
+ 
+
+Control Plane Architecture.  
+
+ 
+
+ 
+
+Create the config folder   
+
+/etc/kubernetes/config  
+
+ 
+
+Download the binaries.   
+
+Kube-apiserver 
+
+Kube-scheduler 
+
+Kube-controller-manager 
+
+Kubectl 
+
+ 
+
+ 
+
+ 
+
+Configure the kubernetes api 
+
+Create /var/lib/kubernetes 
+
+Copy the ca pem and key  kubernetes pem and key serviceaccount pem and key andd encyption config.yaml file  
+
+ 
+
+INSERT BREAKDOWN OF systemd file of kube-apiserver.service 
+
+ 
+
+Start building the systemd files  
+
+ 
+
+ 
+
+ 
+
+Setup the kube controller manager 
+
+Copy kube-controler-manager.kubeconfig into var/lib/kubernetes 
+
+Create the kube-controller-manager.service systemd file 
+
+ 
+
+INSERT BREAKDOWN OF systemd file 
+
+ 
+
+Copy the kube-scheduler.kubeconfig /var/lib/kubernetes 
+
+Generate  the kubeschedule config yaml in /etc/kubernetes config 
+
+ 
+
+ 
+
+Generate the kube-scheduler.service systemd file   
+
+ 
+
+ 
+
+Enable and start the previous three kube services  
+
+ 
+
+Verify the status of the service  
+
+ 
+
+ 
+
+Install nginx on the controllers  
+
+Create the nginx file to use http   
+
+Enable it 
+
+ 
+
+ 
+
+Create RBAC for kubelet authorization 
+
+Role based access control  
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+WORKER NODES 
+
+Kubelet controls worker nodes provides apis that used by the control plane to manage nodes and pods and interacts with the runtime to manage containers 
+
+Kube-proxy manage iptables rules on the node to provide virtual access to pods  
+
+ 
+
+Container runtime downloads images and runs containers.  not part of kubernetes   (docker or containerd)   
+
+ 
+
+Setup remote kubectl access 
+
+ 
+
+ 
+
+Cluster networking 
+
+ 
+
+ https://kubernetes.io/docs/concepts/cluster-administration/networking/ 
+
+ 
+
+Problems the networking model solves 
+
+How containers communicate 
+
+If containers are on different hosts 
+
+How to communicate with services 
+
+How containers assigned unique ip address and what port to use  
+
+ 
+
+The docker model 
+
+Docker allows containers to communicate with one another using a virtual network bridge configured on the host 
+
+Each host has its own virtual network serving all containers on that host 
+
+For containers on different hosts, proxy traffic is used making sure no containers use the same port  
+
+ 
+
+Kubernetes Model 
+
+One virtual network for whole cluster 
+
+Each pod has unique iP within the cluster 
+
+Each service has unique IP that is in a different range than pod IPs 
+
+ 
+
+Cluster network architecture 
+
+ 
+
+Important CIDR ranges 
+
+Cluster cider range used to assign ips to pods in the cluster.  (example: 10.200.0.0/16) 
+
+Service cluster ip range:  IP range for services in the cluster.  Should not over lap with cluster CIDR range.  (example: 10.32.0.0/24) to differentiate between the former 
+
+POD CIDR.  Ip range for pods on a specific worker node.  This range should fall withing the cluster cider but not overlap with other ranges in that cidr or on other pods.   
+
+ 
+
+https://github.com/weaveworks/weave 
+
+ 
+
+ 
+
+ 
+</div>

@@ -1,0 +1,48 @@
+<%- include('includes/head') %>
+
+
+  <main class="container-fluid">
+    <div class="row">
+    <div class="col-xl-2" id="navigation">
+    <div class="sticky-top">
+      <%- include('includes/nav') %>
+    </div>
+    </div>
+
+
+    <div class="col-9 border-start mt-5" id="content">
+
+
+      <h3>Hello World!</h3>
+      <p>This isn't expected to be anything fantastic.</p>
+
+      <p>I recently picked up a raspberry pi and in playing around with it decided to compile years of technical notes.  It's meant to cover a wide range of topics from hardware and OS to cloud and automation.  </p>
+      
+      <p>I also decided to Dockerize it.  While the notes are only started on the site, I am slowly adding to them for my benefit and that of others.  I also decided to leave the repo public in case anybody ever finds they want to contribute to another in a long list of technical reference websites.  </p>
+      <hr />
+
+       <%- include('includes/pages/comp-basics/introduction') %> <hr />
+       <%- include('includes/pages/comp-basics/hardware') %><hr />
+       <%- include('includes/pages/comp-basics/software') %><hr />
+       <%- include('includes/pages/comp-basics/networking') %><hr />
+       <%- include('includes/pages/comp-basics/security') %><hr />
+       <%- include('includes/pages/operating-systems/windows') %><hr />
+       <%- include('includes/pages/operating-systems/linux') %><hr />
+       <%- include('includes/pages/operating-systems/macos') %><hr />
+       <%- include('includes/pages/cloud/cloud-intro') %><hr />
+       <%- include('includes/pages/cloud/aws') %><hr />
+       <%- include('includes/pages/cloud/gcp') %><hr />
+       <%- include('includes/pages/cloud/openstack') %><hr />
+       <%- include('includes/pages/web-dev/hosting') %> <hr />
+       <%- include('includes/pages/devops/devops-basics') %><hr />
+       <%- include('includes/pages/devops/packer') %><hr />
+       <%- include('includes/pages/devops/ansible') %>
+       
+
+
+    </div>
+  
+  </div>
+  </main>
+
+<%- include('includes/footer') %>

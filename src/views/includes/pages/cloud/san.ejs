@@ -1,0 +1,291 @@
+I recommend that you study linux command line and bash scripting first.  Then Network Plus, and then finish with Storage Plus.  After all that you can skim through san for dummies.  Honestly though, Storage Plus was better than SAN for dummies for me.
+
+Once you have a good base of what a SAN is, you should dig into the the Pure Storage Videos on Youtube or the White papers.   Here is what I would look through.  How does an SSD work?  How is data written or deleted on an SSD?  How does space reclamation or gkidna, he's busy onarbage collection work?  What is latency?  How would you trouble shoot latency a customer was asking about?  
+
+You don’t need to give specifics really, it’s more of a process, what to look for.  What was the activity before the latency spike, what was the activity during the spike, what was the activity/behavior after the spike?  Look for what could have caused it.  
+
+Understand what an IOP is, how bandwidth and IOPs could affect each other.
+
+If you have any questions, shoot me an email, carvertown@gmail.com or text me at 385-225-0560
+
+http://carvertown.com/study_pdf/Network+.pdf
+Recommended Chapters 1, 2, 3, 4, 5, 6, 10, and 13
+
+http://carvertown.com/study_pdf/Data%20Storage%20Networking.pdf
+	Recommended Chapters 4, 5, and 6
+
+http://carvertown.com/study_pdf/Storage%20Area%20Networks.pdf
+	Chapters 1,2,3, and 12 are recommended in SAN for dummies 
+
+http://carvertown.com/study_pdf/LPIC_101_102.pdf
+
+http://carvertown.com/study_pdf/shell_scripting.pdf
+
+http://cli.learncodethehardway.org/book/
+
+http://linuxcommand.org/index.php
+
+http://www.ee.surrey.ac.uk/Teaching/Unix/
+	 	 	
+Fibre Channel
+
+FC (Fibre Channel) --- http://en.wikipedia.org/wiki/Fibre_Channel
+high speed network technology
+
+Fibre Channel Layers
+Layer 4 --- Protocol Mapping FC4
+Lun Masking
+Layer 3 --- Common Services FC3
+Layer 2 --- Network FC2
+Fibre Channel fabric
+Fibre Channel zoning
+Layer 1 --- Data Link FC1
+Layer 0 --- Physical FC0
+
+Layers FC0, FC1, and FC2 are known as FC-PH the physical layers of the fibre channel
+
+FCP
+Fibre Channel Protocol -- transport protocol that predominantly transports SCSI commands over Fibre Channel networks.
+
+HBA
+Host Bus Adapter (Host controller) --- Fibre Channel bus or SCSI bus --- adapter that connects the host to the network and other devices.  Each HBA has a unique World Wide Name (WWN)
+
+WWN --- http://en.wikipedia.org/wiki/World_Wide_Name
+World Wide Name --- unique identifier used to identify switch, ports, etc.  Also known by WWID
+
+
+WWNN
+the node on the WWN -- in the FC
+
+
+WWPN
+the port on the WWN -- in the FC
+
+
+CNA -- Converged Network Adapter
+one device able to replace much of the FC infrastructure
+
+
+http://en.wikipedia.org/wiki/Fibre_Channel#Fibre_Channel_topologies
+
+FC-P2P
+Fibre channel -- point to point --- two devices connected directly to each other
+
+FC-AL
+Fibre channel --- Arbitrated loop --- all devices are in a loop or ring, similar to a token ring in networking.  adding or removing a device from the loop causes all activity on the loop to be interrupted.  The failure of one device causes a break in the ring.  Fibre channel hubs exist to connect multiple devices together and may bypass failed ports
+
+
+FC-SW
+Fibre channel -- switched --- all devices or loops of devices are connected to fibre channel switches.
+
+FCoE --- http://en.wikipedia.org/wiki/Fibre_Channel_over_Ethernet
+Used to converge SAN and LAN together
+Fibre Channel over Ethernet --- encapsulates fibre channel frames over ethernet networks.  
+Must use at least a 10 GB ethernet framework   
+Reduces cables, switches, NICs and HBAs, power, and additional costs
+Works well for virtualization solutions
+Requires:
+Encapsulate the native FC frames
+Ensure no frame loss in ethernet
+Mapping between N-port IDs and MAC addresses (FC to Ethernet)
+10 GB Ethernet
+Remember --- FCoE is not routable at IP layer
+
+FCoE Nic
+Computers can connect to FCoE with converged network adapters (CNAs) which contain both Fibre Channel host bus adapter (HBA) and Ethernet Network Interface Card (NIC) functionality to the same card.
+
+
+FCIP --- Fiber Channel over IP
+SAN connect to FCIP Gateway at edge to connect to IP --- merges the fabrics
+
+iFCP --- internet Fibre Channel Protocol
+Gateway to Gateway protocol --- does not merge fabrics
+
+
+SCSI and iSCSI
+
+SCSI --- http://en.wikipedia.org/wiki/SCSI
+Small Computer System Interface --- set of standards for physically connecting and transferring data between computers and devices
+
+
+iSCSI --- http://en.wikipedia.org/wiki/ISCSI
+Internet Small Computer System Interface --- using SCSI commands and protocols over IP networks  ---  SCSI commands encapsulated over TCP/IP
+
+
+iSCSI Protocol Stack
+Application
+SCSI
+iSCSI
+TCP/IP
+Physical
+
+LUNS --- http://en.wikipedia.org/wiki/Logical_unit_number
+Logical unit number --- number used to identify a logical unit addressed by the SCSI protocol or  SAN protocols which encapsulate SCSI, like FC and iSCSI
+
+iSNS
+	Name Reg and Storage Resource Discovery
+	Discovery Domains and Login Control
+	State Change Notification
+	Bidirectional Mappings
+
+Understand FC vs iSCSI vs FCoE
+
+This article gives some pretty good basic information about the differences. http://www.infoworld.com/article/2627603/infrastructure-storage/fibre-channel-vs--iscsi--the-war-continues.html
+
+RAID levels
+http://en.wikipedia.org/wiki/Standard_RAID_levels
+http://en.wikipedia.org/wiki/Nested_RAID_levels
+Redundant Array of Independent Drives
+	
+	0 	- striping ( for performance )
+	
+	0+1 	- mirror of stripes (you have striped blocks being mirrored)
+	
+	1 	- mirrored ( for redundancy)
+	
+	1+0 	- stripe of mirrors (you have mirrored blocks being striped)
+	
+	5 	- block-level striping with distributed (rotating) parity, one whole “drive” (leg) can fail, and still have all data.
+	
+	6 	- block-level striping with double parity
+
+RAID 5 vs RAID 4:
+why was 4 abandoned
+what is parity?
+how does a RAID 5 handle losing a drive
+
+
+SAN 
+--- http://en.wikipedia.org/wiki/Storage_area_network
+	Storage Area Network ---
+		Host layer
+			HBA --- Host Bus Adapter
+			GBIC --- Gigabit Interface Connector
+			Fiber Optic Cables
+		Fabric Layer
+			Hubs
+			Switches
+			Gateway
+			Router
+		Storage Layer
+
+NAS --- http://en.wikipedia.org/wiki/Network-attached_storage
+	Network Attached Storage --- dedicated file system storage --- OS typically installed on NAS
+		communicate over TCP/IP, and commonly HTTP
+		Performance is limited
+		Backup and recover operations need additional support and configuration
+
+understand the differences of SAN vs NAS
+http://en.wikipedia.org/wiki/Network-attached_storage#NAS_vs._SAN
+(what makes them different internally, but also how they appear different from your PC)
+
+
+why you would want one over the other.
+
+
+https://www.cbtnuggets.com/it-training-videos/course/ctia_storage_plus/12312
+
+
+SAN fabric (and know what a loop is, even though they aren't used anymore).
+
+MLC --- http://en.wikipedia.org/wiki/Multi-level_cell
+	Multi Level Cell SSD
+
+encapsulation --- http://en.wikipedia.org/wiki/Encapsulation_%28networking%29
+	logical communication protocols
+
+Metadata ---  http://en.wikipedia.org/wiki/Metadata
+	Simple explanation, data about data
+
+dedupe --- http://en.wikipedia.org/wiki/Data_deduplication
+	data deduplication --- data compression technique for eliminating duplication copies of repeating data.
+
+
+compression --- http://en.wikipedia.org/wiki/Data_compression
+	data compression
+
+
+thin provisioning --- http://en.wikipedia.org/wiki/Thin_provisioning
+	using virtualization to give the appearance of having more physical resources than are actually available. In storage environment, provides a method for optimizing utilization of available story; relies on on-demand allocation of blocks of data versus the traditional method of allocating all the blocks up front.  Eliminates white space on the disk.
+
+Multipathing --- http://en.wikipedia.org/wiki/Multipath_I/O
+fault-tolerance and performance-enhancement technique that defines more than one physical path 	between the cpu in a computer system and its mass-storage devices through buses, controllers, switches, 	and bridge devices connecting them.
+
+IOPS --- http://en.wikipedia.org/wiki/IOPS
+	Input/Output Operations Per Second --- performance measurement use to benchmark computer storage 	devices.
+
+DCB
+Data Center Bridging
+set of standards for lossless ethernet
+PFC (802.IQbb) -- CoS (class of service) scheme used to pause certain traffic on a link (Per Pri. Pause Frame)
+ETS (802.IQaz) -- min guar. BW per classes
+QCN (802.IQau) -- shape traffic that is causing congestion
+DCBX -- disc. peers and exchange information
+
+concept of zoning --- http://en.wikipedia.org/wiki/Fibre_Channel_zoning
+	partitioning of a fibre channel fabric into smaller subsets to restrict interference, add security, and to simplify management.
+
+	Zoning applies only to switched fabric topology (FC-SW) it does not exist in simpler fibre channel topologies.
+
+
+
+Non-Volatile Random-Access Memory
+
+
+http://www.purestorage.com/blog/pure-mystery-series-part-1-pure-storage-mysteriesdemystifiednvram/
+
+The Pure Storage FlashArray builds upon the common two-node controller model with one significant architectural difference. The NVRAM used to acknowledge writes with low latency and to enable services like adaptive data reduction is located in in the first two storage shelves and not in the storage controllers. By relocating NVRAM to the persistent storage layer (the Flash SSD), Pure Storage engineers have created a stateless storage controller architecture.
+
+
+http://www.purestorage.com/blog/pure-mystery-series-part-1-pure-storage-mysteriesdemystifiednvram/
+
+
+Latency --- http://en.wikipedia.org/wiki/Latency_(engineering)
+http://storageswiss.com/2013/12/10/what-is-latency-and-how-is-it-different-from-iops/
+latency is a measure of the time required for a sub-system or a component in that sub-system to process a single storage transaction or data request.
+
+
+throughput --- http://www.thessdreview.com/featured/ssd-throughput-latency-iopsexplained/
+Throughput is a measure of the amount of data that can be pushed through a common point in the data path in a given time.
+Typically expressed as bits per second in networking terminology and as bytes per second in storage terminology.
+
+VDI --- http://en.wikipedia.org/wiki/Desktop_virtualization#Virtual_desktop_infrastructure
+Virtual Desktop  Infrastructure
+
+
+VMware --- http://en.wikipedia.org/wiki/VMware
+
+
+Hypervisor --- http://en.wikipedia.org/wiki/Hypervisor
+
+How would you implement a Flash San Array at Bluehost?
+
+		
+Links
+
+
+http://www.purestorage.com/pdf/Pure_Storage_Whitepaper_How_Flash_Changes_Everything.pdf
+
+http://www.purestorage.com/pdf/Pure_Storage_Whitepaper_Storage_IO_Crisis.pdf
+
+http://www.purestorage.com/pdf/Pure_Storage_Introduction_to_Flash_Memory.pdf
+
+http://www.purestorage.com/pdf/Pure_Storage_Flash_Array_vs_Flash_Alternatives.pdf
+
+http://www.youtube.com/embed/EVdnyHL1JN0?rel=0&wmode=transparent&autoplay=0&hd=1
+
+http://www.youtube.com/embed/jbqxwYckseA?rel=0&wmode=transparent&autoplay=0&hd=1
+
+http://www.purestorage.com/resources/videos.html
+
+http://www.purestorage.com/resources/analyst-reports.html
+
+http://www.purestorage.com/resources/datasheets-whitepapers.html
+
+http://www.purestorage.com/resources/customers.html
+
+http://en.wikipedia.org/wiki/Write_amplification#Garbage_collection
+
+http://arstechnica.com/information-technology/2012/06/inside-the-ssd-revolution-how-solid-state-disks-really-work/
+
+
